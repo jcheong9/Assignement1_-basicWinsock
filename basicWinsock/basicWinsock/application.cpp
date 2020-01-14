@@ -41,6 +41,7 @@ HWND textHwndRx;
 //Handlers for the tables for send and receive
 HWND hWndListView;
 HWND hWndListViewRx;
+HWND hInput1;
 
 BOOL comPortSet = FALSE;
 PORTPARMA portparma;
@@ -244,6 +245,7 @@ void prepWindow(HINSTANCE hInst) {
 		WS_VISIBLE | WS_CHILD | SS_LEFT | ES_MULTILINE | WS_VSCROLL | ES_READONLY,
 		30, 150, 525, 175, portparma.hwnd, NULL, hInst, NULL);
 
-
+	hInput1 = CreateWindow("edit", "", WS_CHILD | WS_VISIBLE | WS_BORDER | ES_LEFT,
+		125 , 25 , 350, 25, portparma.hwnd, NULL, NULL, NULL);
 
 }
