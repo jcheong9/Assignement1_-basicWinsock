@@ -33,10 +33,19 @@
 #include <Windows.h>
 #include <windows.h>
 #include "application.h"
+void prepWindow(HINSTANCE hInst);
+//Textbox handlers for send and receive
+HWND textHwnd;
+HWND textHwndRx;
+
+//Handlers for the tables for send and receive
+HWND hWndListView;
+HWND hWndListViewRx;
 
 BOOL comPortSet = FALSE;
 PORTPARMA portparma;
 HDC hdc;
+
 static unsigned k = 0;
 static TCHAR Name[] = TEXT("Dumb Terminal");
 char str[255];	//output buffer
@@ -68,7 +77,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hprevInstance,
 {
 	MSG Msg;
 	WNDCLASSEX Wcl;
-	HBRUSH startBackGroundColor = CreateSolidBrush(RGB(236, 240, 241));
+	HBRUSH startBackGroundColor = CreateSolidBrush(RGB(255, 255, 255));
 	// Define a Window class
 	Wcl.cbSize = sizeof(WNDCLASSEX);
 	Wcl.style = 0; // default style
@@ -94,6 +103,9 @@ int WINAPI wWinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hprevInstance,
 
 	portparma.hwnd = CreateWindow(Name, Name, WS_OVERLAPPEDWINDOW, 10, 10,
 		600, 400, NULL, NULL, hInst, NULL);
+
+	prepWindow(hInst);
+
 	ShowWindow(portparma.hwnd, nCmdShow);
 	UpdateWindow(portparma.hwnd);
 	void WINAPI ThreadFuc(HWND hwnd, LPVOID n); //second thread
@@ -186,31 +198,52 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
 
 void PrintToScreen(WPARAM wParam) {
 
-	SIZE lastCharWidth;
-	//hdc = GetDC(portparma.hwnd);
-	RECT windowDimension;
-	char strKey[2];
+	//SIZE lastCharWidth;
+	////hdc = GetDC(portparma.hwnd);
+	//RECT windowDimension;
+	//char strKey[2];
 
-	//finds width of the window
-	GetWindowRect(portparma.hwnd, &windowDimension);
-	int windowWidth = windowDimension.right - windowDimension.left;
+	////finds width of the window
+	//GetWindowRect(portparma.hwnd, &windowDimension);
+	//int windowWidth = windowDimension.right - windowDimension.left;
 
-	//get the width of the last character read
-	sprintf_s(strKey, "%c", (char)wParam);
-	GetTextExtentPoint32(hdc, strKey, 1, &lastCharWidth);
+	////get the width of the last character read
+	//sprintf_s(strKey, "%c", (char)wParam);
+	//GetTextExtentPoint32(hdc, strKey, 1, &lastCharWidth);
 
-	//print the characters
-	SetBkMode(hdc, TRANSPARENT);
-	TextOut(hdc, X, Y, strKey, 1);
+	////print the characters
+	//SetBkMode(hdc, TRANSPARENT);
+	//TextOut(hdc, X, Y, strKey, 1);
 
-	//adds the screen paint coordinates by the amount of the last char width
-	X += lastCharWidth.cx;
+	////adds the screen paint coordinates by the amount of the last char width
+	//X += lastCharWidth.cx;
 
-	//if the displayed characters exceed window width, jump to the next line
-	if (X > windowWidth - 20) {
-		X = 0;
-		Y += 15;
-	}
-	ReleaseDC(portparma.hwnd, hdc); // Release device context
+	////if the displayed characters exceed window width, jump to the next line
+	//if (X > windowWidth - 20) {
+	//	X = 0;
+	//	Y += 15;
+	//}
+	//ReleaseDC(portparma.hwnd, hdc); // Release device context
+	
+	/*
+	// Set the text in the edit control
+	SetWindowText(textHwnd, newBuffer);
+	*/
 }
 
+void prepWindow(HINSTANCE hInst) {
+	/*
+	Send section
+	*/
+
+	HWND textHwndLabel = CreateWindow("STATIC", "Send",
+		WS_VISIBLE | WS_CHILD | SS_LEFT | ES_READONLY,
+		0, 0, 550, 20, portparma.hwnd, NULL, hInst, NULL);
+
+	textHwnd = CreateWindow("EDIT", "",
+		WS_VISIBLE | WS_CHILD | SS_LEFT | ES_MULTILINE | WS_VSCROLL | ES_READONLY,
+		30, 150, 525, 175, portparma.hwnd, NULL, hInst, NULL);
+
+
+
+}
