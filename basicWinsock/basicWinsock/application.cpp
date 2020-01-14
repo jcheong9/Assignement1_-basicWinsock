@@ -42,6 +42,8 @@ HWND textHwndRx;
 HWND hWndListView;
 HWND hWndListViewRx;
 HWND hInput1;
+HWND hInput2;
+HWND hRadioBtn[3];
 
 BOOL comPortSet = FALSE;
 PORTPARMA portparma;
@@ -49,6 +51,7 @@ HDC hdc;
 
 static unsigned k = 0;
 static TCHAR Name[] = TEXT("Dumb Terminal");
+
 char str[255];	//output buffer
 int X = 0, Y = 0; // Current coordinates
 
@@ -236,16 +239,30 @@ void prepWindow(HINSTANCE hInst) {
 	/*
 	Send section
 	*/
+	//for (int i = 0; i < 3; i++)
+	//{
+	//	hRadioBtn[i] = CreateWindow("button", RadioBtnLabels[i], WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON,
+	//		5, cyChar * (i + 1), cxChar * 40, cyChar, hwnd, (HMENU)i, ((LPCREATESTRUCT)lParam)->hInstance, NULL);
+	//}
+	/*Button_SetCheck(hRadioBtn[0], BST_CHECKED);*/
+	HWND hwndButton = CreateWindow( "BUTTON", "Send", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
+		450, 115, 100, 20,  portparma.hwnd, NULL, NULL, NULL);    
 
-	HWND textHwndLabel = CreateWindow("STATIC", "Send",
+
+	HWND textHwndLabel = CreateWindow("STATIC", "Find Host and IP",
 		WS_VISIBLE | WS_CHILD | SS_LEFT | ES_READONLY,
-		0, 0, 550, 20, portparma.hwnd, NULL, hInst, NULL);
+		30, 0, 550, 20, portparma.hwnd, NULL, NULL, NULL);
 
 	textHwnd = CreateWindow("EDIT", "",
 		WS_VISIBLE | WS_CHILD | SS_LEFT | ES_MULTILINE | WS_VSCROLL | ES_READONLY,
 		30, 150, 525, 175, portparma.hwnd, NULL, hInst, NULL);
 
 	hInput1 = CreateWindow("edit", "", WS_CHILD | WS_VISIBLE | WS_BORDER | ES_LEFT,
-		125 , 25 , 350, 25, portparma.hwnd, NULL, NULL, NULL);
+		200 , 40 , 350, 20, portparma.hwnd, NULL, NULL, NULL);
+
+	hInput2 = CreateWindow("edit", "", WS_CHILD | WS_VISIBLE | WS_BORDER | ES_LEFT,
+		200, 75, 350, 20, portparma.hwnd, NULL, NULL, NULL);
+
+	
 
 }

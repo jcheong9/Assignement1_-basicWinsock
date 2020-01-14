@@ -25,6 +25,9 @@
 #include <windows.h>
 
 #define IDM_HELP						100
+#define ID_LOOKUP_HOSTNAME				101
+#define ID_LOOKUP_SERVICENAME			102
+#define ID_LOOKUP_PORTNUMBER			103
 #define IDM_EXIT						105
 
 
@@ -39,6 +42,6 @@ typedef struct
 	HANDLE hSerial;
 	HANDLE readThread;
 	DCB dcb;
-	BOOL connectMode;
-	COMMCONFIG cc;
+
+	int selection = 0;
 } PORTPARMA;
