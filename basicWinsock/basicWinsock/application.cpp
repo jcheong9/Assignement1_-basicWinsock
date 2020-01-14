@@ -62,8 +62,8 @@ int X = 0, Y = 0; // Current coordinates
 -- This function creates window and the user interface.
 --
 ----------------------------------------------------------------------------------------------------------------------*/
-int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hprevInstance,
-	LPSTR lspszCmdParam, int nCmdShow)
+int WINAPI wWinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hprevInstance,
+	_In_ LPWSTR lspszCmdParam, _In_ int nCmdShow)
 {
 	MSG Msg;
 	WNDCLASSEX Wcl;

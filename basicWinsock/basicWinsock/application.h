@@ -25,10 +25,6 @@
 #define STRICT
 #include <windows.h>
 
-#define IDM_HELP						100
-#define IDM_EXIT						105
-
-
 //Declaration Functions application
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 void PrintToScreen(WPARAM wParam);
