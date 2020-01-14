@@ -22,8 +22,11 @@
 #pragma warning (disable: 4096)
 #define _CRT_SECURE_NO_WARNINGS
 
-#define STRICT
 #include <windows.h>
+
+#define IDM_HELP						100
+#define IDM_EXIT						105
+
 
 //Declaration Functions application
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);

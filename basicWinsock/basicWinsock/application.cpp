@@ -31,6 +31,7 @@
 #include <stdio.h>
 #include <string>
 #include <Windows.h>
+#include <windows.h>
 #include "application.h"
 
 BOOL comPortSet = FALSE;
