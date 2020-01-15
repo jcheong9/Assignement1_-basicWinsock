@@ -21,19 +21,24 @@
 #pragma once
 #pragma warning (disable: 4096)
 #define _CRT_SECURE_NO_WARNINGS
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+#include <stdio.h>
+#include <string>
+#include <Windows.h>
 
-#include <windows.h>
 
-#define IDM_HELP						100
+
+#define ID_HELP							100
 #define ID_LOOKUP_HOSTNAME				101
 #define ID_LOOKUP_SERVICENAME			102
 #define ID_LOOKUP_PORTNUMBER			103
-#define IDM_EXIT						105
+#define ID_ENTER_BTN					104
+#define ID_EXIT							105
 
 
 //Declaration Functions application
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
-void PrintToScreen(WPARAM wParam);
+int nameAddr(TCHAR* ip, HWND textHwnd);
 
 
 typedef struct

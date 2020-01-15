@@ -28,12 +28,8 @@
 ----------------------------------------------------------------------------------------------------------------------*/
 #pragma once
 
-#include <stdio.h>
-#include <string>
-#include <Windows.h>
-#include <windows.h>
 #include "application.h"
-void prepWindow(HINSTANCE hInst);
+
 //Textbox handlers for send and receive
 HWND textHwnd;
 HWND textHwndRx;
@@ -44,8 +40,11 @@ HWND hWndListViewRx;
 HWND hInput1;
 HWND hInput2;
 HWND hRadioBtn[3];
+HWND hwndButton;
+HWND textHwndLabel;
+HWND textHwndLabel1;
+HWND textHwndLabel2;
 
-BOOL comPortSet = FALSE;
 PORTPARMA portparma;
 HDC hdc;
 
@@ -86,7 +85,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hprevInstance,
 	// Define a Window class
 	Wcl.cbSize = sizeof(WNDCLASSEX);
 	Wcl.style = 0; // default style
-	Wcl.hIcon = LoadIcon(NULL, (LPCSTR)IDI_APPLICATION); // large icon 
+	Wcl.hIcon = LoadIcon(NULL, (LPCWSTR)IDI_APPLICATION); // large icon 
 	Wcl.hIconSm = NULL; // use small version of large icon
 	Wcl.hCursor = LoadCursor(NULL, IDC_ARROW);  // cursor style
 
@@ -107,8 +106,6 @@ int WINAPI wWinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hprevInstance,
 
 	portparma.hwnd = CreateWindow(Name, Name, WS_OVERLAPPEDWINDOW, 10, 10,
 		600, 400, NULL, NULL, hInst, NULL);
-
-	prepWindow(hInst);
 
 	ShowWindow(portparma.hwnd, nCmdShow);
 	UpdateWindow(portparma.hwnd);
@@ -145,29 +142,76 @@ int WINAPI wWinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hprevInstance,
 LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
 	WPARAM wParam, LPARAM lParam)
 {
-
-	char charByte[2];
 	hdc = GetDC(hwnd);
-	TCHAR spCOM1[] = TEXT("COM1");
-	TCHAR spCOM2[] = TEXT("COM2");
-	TCHAR spCOM3[] = TEXT("COM3");
-
-
+	TCHAR str[256];
 	switch (Message)
 	{
+	case WM_CREATE:
+		hwndButton = CreateWindow(L"BUTTON", L"Send", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
+			455, 115, 100, 20, hwnd, (HMENU)ID_ENTER_BTN, NULL, NULL);
+
+		textHwndLabel = CreateWindow(L"STATIC", L"Find Host and IP",
+			WS_CHILD | WS_VISIBLE | SS_CENTER,
+			30, 10, 525, 20, hwnd, NULL, NULL, NULL);
+
+		textHwndLabel1 = CreateWindow(L"STATIC", L"Host name/ IP",
+			WS_VISIBLE | WS_CHILD | SS_LEFT | ES_READONLY,
+			30, 45, 200, 20, hwnd, NULL, NULL, NULL);
+
+		textHwnd = CreateWindow(L"EDIT", L"",
+			WS_VISIBLE | WS_CHILD | SS_LEFT | ES_MULTILINE | WS_VSCROLL | ES_READONLY | WS_BORDER,
+			30, 150, 525, 175, hwnd, NULL, NULL, NULL);
+
+		hInput1 = CreateWindow(L"edit", L"", WS_CHILD | WS_VISIBLE | WS_BORDER | ES_LEFT,
+			205, 45, 350, 20, hwnd, NULL, NULL, NULL);
+
+		textHwndLabel2 = CreateWindow(L"STATIC", L"IP ",
+			WS_VISIBLE | WS_CHILD | SS_LEFT | ES_READONLY,
+			30, 80, 200, 20, hwnd, NULL, NULL, NULL);
+
+		hInput2 = CreateWindow(L"edit", L"", WS_CHILD | WS_VISIBLE | WS_BORDER | ES_LEFT,
+			205, 80, 350, 20, hwnd, NULL, NULL, NULL);
+		ShowWindow(hInput2, SW_HIDE);
+		ShowWindow(textHwndLabel2, SW_HIDE);
+
 	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
-		}
-
-		break;
-	case WM_KEYDOWN:
-		switch (wParam)
-		{
-		case VK_ESCAPE:
+		case ID_HELP:
 
 			break;
+		case ID_LOOKUP_HOSTNAME:
+			portparma.selection = 0;
+			ShowWindow(hInput2, SW_HIDE);
+			ShowWindow(textHwndLabel2, SW_HIDE);
+			break;
+		case ID_LOOKUP_SERVICENAME:
+			portparma.selection = 1;
+			ShowWindow(textHwndLabel2, SW_RESTORE);
+			ShowWindow(hInput2, SW_RESTORE);
+			break;
+		case ID_LOOKUP_PORTNUMBER:
+			portparma.selection = 2;
+			ShowWindow(textHwndLabel2, SW_RESTORE);
+			ShowWindow(hInput2, SW_RESTORE);
+			break;
+		case ID_EXIT:
+			PostQuitMessage(0);
+			break;
+
+		case ID_ENTER_BTN:
+			GetWindowText(hInput1, str, 256);
+			if (hInput1 != NULL) {
+				nameAddr(str,textHwnd);
+			}
+			else {
+				SetWindowText(textHwnd, L"Invalid input");
+			}
+			OutputDebugStringW(L"YOOYOYO");
+			
+			break;
 		}
+
 		break;
 	case WM_CTLCOLORSTATIC:
 		hdc = (HDC)wParam;
@@ -182,95 +226,3 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
 	return 0;
 }
 
-/*------------------------------------------------------------------------------------------------------------------
--- FUNCTION: PrintToScreen
---
--- DATE: Spetember 24, 2019
---
--- REVISIONS: (Date and Description)
---
--- DESIGNER: Jameson Cheong
---
--- PROGRAMMER: Jameson Cheong
---
--- INTERFACE: void printToScreen(char readBuffer[])
---
--- RETURNS: void.
---
--- NOTES:
--- This function prints characters on the screen.
-----------------------------------------------------------------------------------------------------------------------*/
-
-void PrintToScreen(WPARAM wParam) {
-
-	//SIZE lastCharWidth;
-	////hdc = GetDC(portparma.hwnd);
-	//RECT windowDimension;
-	//char strKey[2];
-
-	////finds width of the window
-	//GetWindowRect(portparma.hwnd, &windowDimension);
-	//int windowWidth = windowDimension.right - windowDimension.left;
-
-	////get the width of the last character read
-	//sprintf_s(strKey, "%c", (char)wParam);
-	//GetTextExtentPoint32(hdc, strKey, 1, &lastCharWidth);
-
-	////print the characters
-	//SetBkMode(hdc, TRANSPARENT);
-	//TextOut(hdc, X, Y, strKey, 1);
-
-	////adds the screen paint coordinates by the amount of the last char width
-	//X += lastCharWidth.cx;
-
-	////if the displayed characters exceed window width, jump to the next line
-	//if (X > windowWidth - 20) {
-	//	X = 0;
-	//	Y += 15;
-	//}
-	//ReleaseDC(portparma.hwnd, hdc); // Release device context
-	
-	/*
-	// Set the text in the edit control
-	SetWindowText(textHwnd, newBuffer);
-	*/
-}
-
-void prepWindow(HINSTANCE hInst) {
-	/*
-	Send section
-	*/
-	//for (int i = 0; i < 3; i++)
-	//{
-	//	hRadioBtn[i] = CreateWindow("button", RadioBtnLabels[i], WS_CHILD | WS_VISIBLE | BS_AUTORADIOBUTTON,
-	//		5, cyChar * (i + 1), cxChar * 40, cyChar, hwnd, (HMENU)i, ((LPCREATESTRUCT)lParam)->hInstance, NULL);
-	//}
-	/*Button_SetCheck(hRadioBtn[0], BST_CHECKED);*/
-	HWND hwndButton = CreateWindow( "BUTTON", "Send", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-		455, 115, 100, 20,  portparma.hwnd, NULL, NULL, NULL);    
-
-	HWND textHwndLabel = CreateWindow("STATIC", "Find Host and IP",
-		WS_CHILD | WS_VISIBLE | SS_CENTER,
-		30, 10, 525, 20, portparma.hwnd, NULL, NULL, NULL);
-
-	HWND textHwndLabel1 = CreateWindow("STATIC", "Host name",
-		WS_VISIBLE | WS_CHILD | SS_LEFT | ES_READONLY,
-		30, 40, 200, 20, portparma.hwnd, NULL, NULL, NULL);
-
-	HWND textHwndLabel2 = CreateWindow("STATIC", "IP ",
-		WS_VISIBLE | WS_CHILD | SS_LEFT | ES_READONLY,
-		30, 75, 200, 20, portparma.hwnd, NULL, NULL, NULL);
-
-	textHwnd = CreateWindow("EDIT", "",
-		WS_VISIBLE | WS_CHILD | SS_LEFT | ES_MULTILINE | WS_VSCROLL | ES_READONLY | WS_BORDER,
-		30, 150, 525, 175, portparma.hwnd, NULL, hInst, NULL);
-
-	hInput1 = CreateWindow("edit", "", WS_CHILD | WS_VISIBLE | WS_BORDER | ES_LEFT,
-		205 , 45 , 350, 20, portparma.hwnd, NULL, NULL, NULL);
-
-	hInput2 = CreateWindow("edit", "", WS_CHILD | WS_VISIBLE | WS_BORDER | ES_LEFT,
-		205, 80, 350, 20, portparma.hwnd, NULL, NULL, NULL);
-
-	
-
-}
