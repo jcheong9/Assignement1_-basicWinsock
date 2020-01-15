@@ -144,6 +144,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
 {
 	hdc = GetDC(hwnd);
 	TCHAR str[256];
+	TCHAR input2Text[256];
 	switch (Message)
 	{
 	case WM_CREATE:
@@ -177,14 +178,12 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
 	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
-		case ID_HELP:
-
-			break;
 		case ID_LOOKUP_HOSTNAME:
 			portparma.selection = 0;
 			ShowWindow(hInput2, SW_HIDE);
 			ShowWindow(textHwndLabel2, SW_HIDE);
 			SetWindowText(textHwndLabel1, L"Host name or IP");
+			SetWindowText(textHwndLabel, L"host name -> IP OR IP -> host name");
 
 			break;
 		case ID_LOOKUP_SERVICENAME:
@@ -192,6 +191,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
 			ShowWindow(textHwndLabel2, SW_RESTORE);
 			ShowWindow(hInput2, SW_RESTORE);
 			SetWindowText(textHwndLabel1, L"Service: ");
+			SetWindowText(textHwndLabel, L"service name/protocol -> port number");
 
 			break;
 		case ID_LOOKUP_PORTNUMBER:
@@ -199,6 +199,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
 			ShowWindow(textHwndLabel2, SW_RESTORE);
 			ShowWindow(hInput2, SW_RESTORE);
 			SetWindowText(textHwndLabel1, L"Port: ");
+			SetWindowText(textHwndLabel, L"port number -> service name/protocol");
+
 			break;
 		case ID_EXIT:
 			PostQuitMessage(0);
@@ -207,7 +209,19 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
 		case ID_ENTER_BTN:
 			GetWindowText(hInput1, str, 256);
 			if (GetWindowTextLengthA(hInput1) != 0) {
-				nameAddr(str,textHwnd);
+				switch (portparma.selection) {
+					case 1:
+						GetWindowText(hInput2, input2Text, 256);
+						service_port(str, input2Text, textHwnd);
+						break;
+					case 2:
+						GetWindowText(hInput2, input2Text, 256);
+						port_service(str, input2Text, textHwnd);
+						break;
+					default:
+						nameAddr(str, textHwnd);
+						break;
+				}
 			}
 			else {
 				SetWindowText(textHwnd, L"Invalid input");

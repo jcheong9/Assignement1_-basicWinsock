@@ -28,8 +28,6 @@
 #include <Windows.h>
 #pragma comment(lib,"ws2_32.lib")
 
-
-#define ID_HELP							100
 #define ID_LOOKUP_HOSTNAME				101
 #define ID_LOOKUP_SERVICENAME			102
 #define ID_LOOKUP_PORTNUMBER			103
@@ -40,6 +38,8 @@
 //Declaration Functions application
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 int nameAddr(TCHAR* ip, HWND textHwnd);
+int service_port(TCHAR* port, TCHAR* serivce, HWND textHwnd);
+int port_service(TCHAR* port, TCHAR* protocol, HWND textHwnd);
 
 
 typedef struct
