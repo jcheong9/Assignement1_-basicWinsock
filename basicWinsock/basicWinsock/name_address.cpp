@@ -1,8 +1,6 @@
 #include "application.h"
 
 
-#pragma comment(lib,"ws2_32.lib")
-
 int nameAddr(TCHAR* ip, HWND textHwnd) {
 	int		a;
 	struct	hostent* hp;
@@ -91,16 +89,24 @@ int nameAddr(TCHAR* ip, HWND textHwnd) {
 	{
 		struct in_addr in;
 		char** q;
+		TCHAR* temp;
 
 		memcpy(&in.s_addr, *p, sizeof(in.s_addr));
 		sprintf(buff, "IP Address: %s\t Host Name: %s\n", inet_ntoa(in), hp->h_name);
 		mbstowcs(str, buff, 256);
 		SetWindowText(textHwnd, str);
 		for (q = hp->h_aliases; *q != 0; q++) {
-			sprintf(buff, "--->   Aliases: %s\n", *q);
+			sprintf(buff, "\r--->   Aliases: %s\n", *q);
 			mbstowcs(str, buff, 256);
-			SetWindowText(textHwnd, str);
+			int left, right;
+			int len = GetWindowTextLength(textHwnd);
+			SendMessage(textHwnd, EM_GETSEL, (WPARAM)&left, (LPARAM)&right);
+			SendMessage(textHwnd, EM_SETSEL, len, len);
+			SendMessage(textHwnd, EM_REPLACESEL, TRUE, (LPARAM)str);
+			SendMessage(textHwnd, EM_SETSEL, left, right);
+
 		}
+		
 	}
 
 	WSACleanup();

@@ -125,6 +125,8 @@
   <ItemGroup>
     <ClCompile Include="application.cpp" />
     <ClCompile Include="name_address.cpp" />
+    <ClCompile Include="port_service.cpp" />
+    <ClCompile Include="service_port.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h" />

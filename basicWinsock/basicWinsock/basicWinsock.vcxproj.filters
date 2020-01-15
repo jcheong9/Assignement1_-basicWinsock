@@ -21,6 +21,12 @@
     <ClCompile Include="name_address.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="service_port.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="port_service.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="application.h">

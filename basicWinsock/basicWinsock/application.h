@@ -19,13 +19,14 @@
 -- This is a header file contains declaration functions and libraries.
 ----------------------------------------------------------------------------------------------------------------------*/
 #pragma once
-#pragma warning (disable: 4096)
+
 #define _CRT_SECURE_NO_WARNINGS
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
+
 #include <stdio.h>
 #include <string>
 #include <Windows.h>
-
+#pragma comment(lib,"ws2_32.lib")
 
 
 #define ID_HELP							100

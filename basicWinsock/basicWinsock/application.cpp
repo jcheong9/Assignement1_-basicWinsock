@@ -154,20 +154,20 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
 			WS_CHILD | WS_VISIBLE | SS_CENTER,
 			30, 10, 525, 20, hwnd, NULL, NULL, NULL);
 
-		textHwndLabel1 = CreateWindow(L"STATIC", L"Host name/ IP",
+		textHwndLabel1 = CreateWindow(L"STATIC", L"Host name or IP",
 			WS_VISIBLE | WS_CHILD | SS_LEFT | ES_READONLY,
-			30, 45, 200, 20, hwnd, NULL, NULL, NULL);
+			30, 45, 150, 20, hwnd, NULL, NULL, NULL);
 
 		textHwnd = CreateWindow(L"EDIT", L"",
-			WS_VISIBLE | WS_CHILD | SS_LEFT | ES_MULTILINE | WS_VSCROLL | ES_READONLY | WS_BORDER,
+			WS_VISIBLE | WS_CHILD | SS_LEFT | ES_MULTILINE | ES_WANTRETURN | WS_VSCROLL | ES_READONLY | WS_BORDER,
 			30, 150, 525, 175, hwnd, NULL, NULL, NULL);
 
 		hInput1 = CreateWindow(L"edit", L"", WS_CHILD | WS_VISIBLE | WS_BORDER | ES_LEFT,
 			205, 45, 350, 20, hwnd, NULL, NULL, NULL);
 
-		textHwndLabel2 = CreateWindow(L"STATIC", L"IP ",
+		textHwndLabel2 = CreateWindow(L"STATIC", L"Protocol: ",
 			WS_VISIBLE | WS_CHILD | SS_LEFT | ES_READONLY,
-			30, 80, 200, 20, hwnd, NULL, NULL, NULL);
+			30, 80, 150, 20, hwnd, NULL, NULL, NULL);
 
 		hInput2 = CreateWindow(L"edit", L"", WS_CHILD | WS_VISIBLE | WS_BORDER | ES_LEFT,
 			205, 80, 350, 20, hwnd, NULL, NULL, NULL);
@@ -184,16 +184,21 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
 			portparma.selection = 0;
 			ShowWindow(hInput2, SW_HIDE);
 			ShowWindow(textHwndLabel2, SW_HIDE);
+			SetWindowText(textHwndLabel1, L"Host name or IP");
+
 			break;
 		case ID_LOOKUP_SERVICENAME:
 			portparma.selection = 1;
 			ShowWindow(textHwndLabel2, SW_RESTORE);
 			ShowWindow(hInput2, SW_RESTORE);
+			SetWindowText(textHwndLabel1, L"Service: ");
+
 			break;
 		case ID_LOOKUP_PORTNUMBER:
 			portparma.selection = 2;
 			ShowWindow(textHwndLabel2, SW_RESTORE);
 			ShowWindow(hInput2, SW_RESTORE);
+			SetWindowText(textHwndLabel1, L"Port: ");
 			break;
 		case ID_EXIT:
 			PostQuitMessage(0);
