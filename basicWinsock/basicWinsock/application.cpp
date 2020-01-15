@@ -47,7 +47,7 @@ PORTPARMA portparma;
 HDC hdc;
 
 static unsigned k = 0;
-static TCHAR Name[] = TEXT("Baic Window Socket");
+static TCHAR Name[] = TEXT("Basic Window Socket");
 static HBRUSH startBackGroundColor = CreateSolidBrush(RGB(255, 255, 255));
 
 char str[255];	//output buffer
@@ -150,7 +150,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
 		hwndButton = CreateWindow(L"BUTTON", L"Send", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 			455, 115, 100, 20, hwnd, (HMENU)ID_ENTER_BTN, NULL, NULL);
 
-		textHwndLabel = CreateWindow(L"STATIC", L"Find Host and IP",
+		textHwndLabel = CreateWindow(L"STATIC", L"host name -> IP OR IP -> host name",
 			WS_CHILD | WS_VISIBLE | SS_CENTER,
 			30, 10, 525, 20, hwnd, NULL, NULL, NULL);
 
