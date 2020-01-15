@@ -1,4 +1,54 @@
 #include "application.h"
+/*------------------------------------------------------------------------------------------------------------------
+-- SOURCE FILE: winmain.cpp -	An application that creates a window and process window messages
+--								that define the behavior of dumb terminal.
+--
+--
+-- PROGRAM: Basic Window Socket Application
+--
+-- FUNCTIONS:
+--				WinMain(HINSTANCE hInst, HINSTANCE hprevInstance,
+--						LPSTR lspszCmdParam, int nCmdShow)
+--				LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
+--						WPARAM wParam, LPARAM lParam)
+--				void PrintToScreen(WPARAM wParam)
+--				DWORD WINAPI MonitorInputThread(LPVOID hwnd)
+--
+-- DATE: January 15, 2020
+--
+-- REVISIONS: (Date and Description)
+--
+-- DESIGNER: Jameson Cheong
+--
+-- PROGRAMMER: Jameson Cheong
+--
+-- NOTES:
+-- This is a minimal terminator emulator that performs basic functions of
+-- connection to a serial port and transmitting or receiving characters from the port.
+-- Also, it provides user interface for user to set port settings and see displayed transmitted char.
+----------------------------------------------------------------------------------------------------------------------*/
+
+
+/*------------------------------------------------------------------------------------------------------------------
+-- FUNCTION: WinMain
+--
+-- DATE: January 15, 2020
+--
+-- REVISIONS: (Date and Description)
+--
+-- DESIGNER: Jameson Cheong
+--
+-- PROGRAMMER: Jameson Cheong
+--
+-- INTERFACE: int WinMain(HINSTANCE hInst, HINSTANCE hprevInstance,
+--					LPSTR lspszCmdParam, int nCmdShow)
+--
+-- RETURNS: int
+--
+-- NOTES:
+-- This function creates window and the user interface.
+--
+----------------------------------------------------------------------------------------------------------------------*/
 
 
 int nameAddr(TCHAR* ip, HWND textHwnd) {

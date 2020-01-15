@@ -4,7 +4,7 @@
 --								that define the behavior of dumb terminal.
 --
 --
--- PROGRAM: DumbTerminalEmulation
+-- PROGRAM: Basic Window Socket Application
 --
 -- FUNCTIONS:
 --				WinMain(HINSTANCE hInst, HINSTANCE hprevInstance,
@@ -14,7 +14,7 @@
 --				void PrintToScreen(WPARAM wParam)
 --				DWORD WINAPI MonitorInputThread(LPVOID hwnd)
 --
--- DATE: September 21, 2019
+-- DATE: January 15, 2020
 --
 -- REVISIONS: (Date and Description)
 --

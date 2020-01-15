@@ -1,13 +1,13 @@
 #pragma once
 /*------------------------------------------------------------------------------------------------------------------
--- SOURCE FILE: WinMain.h - contains the declaration functions
---							and libraries for this project
+-- SOURCE FILE: application.h - contains the declaration functions
+--								and libraries for this project
 --
 --
 --
--- PROGRAM: DumbTerminalEmulation
+-- PROGRAM: Basic Window Socket Application
 --
--- DATE: September 21, 2019
+-- DATE: January 15, 2020
 --
 -- REVISIONS:
 --

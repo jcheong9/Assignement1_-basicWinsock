@@ -3,7 +3,7 @@
 --								that define the behavior of dumb terminal.
 --
 --
--- PROGRAM: DumbTerminalEmulation
+-- PROGRAM: Basic Window Socket Application
 --
 -- FUNCTIONS:
 --				WinMain(HINSTANCE hInst, HINSTANCE hprevInstance,
@@ -13,7 +13,7 @@
 --				void PrintToScreen(WPARAM wParam)
 --				DWORD WINAPI MonitorInputThread(LPVOID hwnd)
 --
--- DATE: September 21, 2019
+-- DATE: January 15, 2020
 --
 -- REVISIONS: (Date and Description)
 --
@@ -59,7 +59,7 @@ int X = 0, Y = 0; // Current coordinates
 /*------------------------------------------------------------------------------------------------------------------
 -- FUNCTION: WinMain
 --
--- DATE: September 21, 2019
+-- DATE: January 15, 2020
 --
 -- REVISIONS: (Date and Description)
 --
@@ -122,7 +122,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hprevInstance,
 /*------------------------------------------------------------------------------------------------------------------
 -- FUNCTION: WndProc
 --
--- DATE: September 21, 2019
+-- DATE: January 15, 2020
 --
 -- REVISIONS: (Date and Description)
 --
