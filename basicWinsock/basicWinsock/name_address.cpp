@@ -83,6 +83,7 @@ int nameAddr(TCHAR* ip, HWND textHwnd) {
 			}
 			mbstowcs(str, buff, 256);
 			SetWindowText(textHwnd, str);
+			return 1;
 		}
 	}
 

@@ -201,7 +201,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
 
 		case ID_ENTER_BTN:
 			GetWindowText(hInput1, str, 256);
-			if (hInput1 != NULL) {
+			if (GetWindowTextLengthA(hInput1) != 0) {
 				nameAddr(str,textHwnd);
 			}
 			else {
