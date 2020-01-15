@@ -38,8 +38,8 @@
 //Declaration Functions application
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 int nameAddr(TCHAR* ip, HWND textHwnd);
-int service_port(TCHAR* port, TCHAR* serivce, HWND textHwnd);
-int port_service(TCHAR* port, TCHAR* protocol, HWND textHwnd);
+int service_port(TCHAR* port, TCHAR* serivce, HWND textHwnd, int lengthInput2);
+int port_service(TCHAR* port, TCHAR* protocol, HWND textHwnd, int lengthInput2);
 
 
 typedef struct

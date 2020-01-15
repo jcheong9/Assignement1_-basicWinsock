@@ -21,7 +21,7 @@
 -- This simple  program  will  take a user specified service name and protocol
 -- and resolve it into its port number using window socket. 
 ----------------------------------------------------------------------------------------------------------------------*/
-int service_port(TCHAR* serivce, TCHAR* protocol, HWND textHwnd) {
+int service_port(TCHAR* serivce, TCHAR* protocol, HWND textHwnd, int lengthInput2) {
 	struct servent* sv;
 	char serviceName[256];
 	char protocalUsed[256];
@@ -31,6 +31,10 @@ int service_port(TCHAR* serivce, TCHAR* protocol, HWND textHwnd) {
 	WORD wVersionRequested = MAKEWORD(2, 2);
 	WSADATA wsaData;
 
+	if (lengthInput2 == 0) {
+		SetWindowText(textHwnd, L"Invalid input");
+		return 1;
+	}
 
 	// Open up a Winsock v2.2 session
 	WSAStartup(wVersionRequested, &wsaData);

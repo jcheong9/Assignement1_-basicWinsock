@@ -22,7 +22,7 @@
 -- and resolve it into its service name using window socket. 
 ----------------------------------------------------------------------------------------------------------------------*/
 
-int port_service(TCHAR* port, TCHAR* protocol, HWND textHwnd) {
+int port_service(TCHAR* port, TCHAR* protocol, HWND textHwnd, int lengthInput2) {
 	struct servent* sv;
 	int s_port;
 	char portNum[256];
@@ -37,6 +37,10 @@ int port_service(TCHAR* port, TCHAR* protocol, HWND textHwnd) {
 	wcstombs(portNum, port, 256);
 	wcstombs(protocalUsed, protocol, 256);
 
+	if (lengthInput2 == 0) {
+		SetWindowText(textHwnd, L"Invalid input");
+		return 1;
+	}
 	// Open up a Winsock v2.2 session
 	WSAStartup(wVersionRequested, &wsaData);
 

@@ -20,8 +20,9 @@
 -- PROGRAMMER: Jameson Cheong
 --
 -- NOTES:
--- This application provides 3
--- Also, it provides user interface for user to set port settings and see displayed transmitted char.
+-- This application provides three selections to perform WinSocket API database lookup.
+-- There three selections are name address, service port, and port service. Once these lookup are
+-- executed with the appropriate input(s), the information will be diaplayed on the screen.
 ----------------------------------------------------------------------------------------------------------------------*/
 #pragma once
 
@@ -133,7 +134,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hprevInstance,
 -- RETURNS: LRESULT
 --
 -- NOTES:
--- This function process windows messages and define the behavior of the dumb terminal.
+-- This function process windows messages and define the behavior of this application.
 --
 ----------------------------------------------------------------------------------------------------------------------*/
 LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
@@ -142,9 +143,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
 	hdc = GetDC(hwnd);
 	TCHAR str[256];
 	TCHAR input2Text[256];
+	int lengthInput2;
 	switch (Message)
 	{
-	case WM_CREATE:
+	case WM_CREATE: //creates the labels, text fields and buttons
 		hwndButton = CreateWindow(L"BUTTON", L"Send", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 			455, 115, 100, 20, hwnd, (HMENU)ID_ENTER_BTN, NULL, NULL);
 
@@ -196,24 +198,26 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
 			ShowWindow(textHwndLabel2, SW_RESTORE);
 			ShowWindow(hInput2, SW_RESTORE);
 			SetWindowText(textHwndLabel1, L"Port: ");
-			SetWindowText(textHwndLabel, L"port number -> service name/protocol");
+			SetWindowText(textHwndLabel, L"port number/protocol -> service name");
 
 			break;
 		case ID_EXIT:
-			PostQuitMessage(0);
+			PostQuitMessage(0); //terminates the program
 			break;
 
-		case ID_ENTER_BTN:
+		case ID_ENTER_BTN: //execute functions when button is clicked
 			GetWindowText(hInput1, str, 256);
 			if (GetWindowTextLengthA(hInput1) != 0) {
 				switch (portparma.selection) {
 					case 1:
-						GetWindowText(hInput2, input2Text, 256);
-						service_port(str, input2Text, textHwnd);
+						lengthInput2= GetWindowTextLengthA(hInput2);
+						GetWindowText(hInput2, input2Text, 256); //get the HInput's text
+						service_port(str, input2Text, textHwnd, lengthInput2);
 						break;
 					case 2:
+						lengthInput2 = GetWindowTextLengthA(hInput2);
 						GetWindowText(hInput2, input2Text, 256);
-						port_service(str, input2Text, textHwnd);
+						port_service(str, input2Text, textHwnd, lengthInput2);
 						break;
 					default:
 						nameAddr(str, textHwnd);
@@ -223,11 +227,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
 			else {
 				SetWindowText(textHwnd, L"Invalid input");
 			}
-			OutputDebugStringW(L"YOOYOYO");
-			
 			break;
 		}
-
 		break;
 	case WM_CTLCOLORSTATIC:
 		hdc = (HDC)wParam;
