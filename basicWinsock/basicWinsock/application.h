@@ -39,9 +39,6 @@ void PrintToScreen(WPARAM wParam);
 typedef struct
 {
 	HWND hwnd;
-	HANDLE hSerial;
-	HANDLE readThread;
-	DCB dcb;
 
 	int selection = 0;
 } PORTPARMA;

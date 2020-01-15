@@ -50,7 +50,8 @@ PORTPARMA portparma;
 HDC hdc;
 
 static unsigned k = 0;
-static TCHAR Name[] = TEXT("Dumb Terminal");
+static TCHAR Name[] = TEXT("Baic Window Socket");
+static HBRUSH startBackGroundColor = CreateSolidBrush(RGB(255, 255, 255));
 
 char str[255];	//output buffer
 int X = 0, Y = 0; // Current coordinates
@@ -81,7 +82,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hprevInstance,
 {
 	MSG Msg;
 	WNDCLASSEX Wcl;
-	HBRUSH startBackGroundColor = CreateSolidBrush(RGB(255, 255, 255));
+	
 	// Define a Window class
 	Wcl.cbSize = sizeof(WNDCLASSEX);
 	Wcl.style = 0; // default style
@@ -98,8 +99,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInst,_In_opt_ HINSTANCE hprevInstance,
 	Wcl.cbClsExtra = 0;      // no extra memory needed
 	Wcl.cbWndExtra = 0;
 
-	//intialize readThread = 0;
-	portparma.readThread = 0;
+
 
 	// Register the class
 	if (!RegisterClassEx(&Wcl))
@@ -169,9 +169,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
 			break;
 		}
 		break;
-	case WM_CHAR:	// Process keystroke
-
-		break;
+	case WM_CTLCOLORSTATIC:
+		hdc = (HDC)wParam;
+		SetBkColor(hdc, RGB(255, 255, 255));
+		return (INT_PTR)startBackGroundColor;
 	case WM_DESTROY:		// message to terminate the program
 		PostQuitMessage(0);
 		break;
@@ -246,22 +247,29 @@ void prepWindow(HINSTANCE hInst) {
 	//}
 	/*Button_SetCheck(hRadioBtn[0], BST_CHECKED);*/
 	HWND hwndButton = CreateWindow( "BUTTON", "Send", WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-		450, 115, 100, 20,  portparma.hwnd, NULL, NULL, NULL);    
-
+		455, 115, 100, 20,  portparma.hwnd, NULL, NULL, NULL);    
 
 	HWND textHwndLabel = CreateWindow("STATIC", "Find Host and IP",
+		WS_CHILD | WS_VISIBLE | SS_CENTER,
+		30, 10, 525, 20, portparma.hwnd, NULL, NULL, NULL);
+
+	HWND textHwndLabel1 = CreateWindow("STATIC", "Host name",
 		WS_VISIBLE | WS_CHILD | SS_LEFT | ES_READONLY,
-		30, 0, 550, 20, portparma.hwnd, NULL, NULL, NULL);
+		30, 40, 200, 20, portparma.hwnd, NULL, NULL, NULL);
+
+	HWND textHwndLabel2 = CreateWindow("STATIC", "IP ",
+		WS_VISIBLE | WS_CHILD | SS_LEFT | ES_READONLY,
+		30, 75, 200, 20, portparma.hwnd, NULL, NULL, NULL);
 
 	textHwnd = CreateWindow("EDIT", "",
-		WS_VISIBLE | WS_CHILD | SS_LEFT | ES_MULTILINE | WS_VSCROLL | ES_READONLY,
+		WS_VISIBLE | WS_CHILD | SS_LEFT | ES_MULTILINE | WS_VSCROLL | ES_READONLY | WS_BORDER,
 		30, 150, 525, 175, portparma.hwnd, NULL, hInst, NULL);
 
 	hInput1 = CreateWindow("edit", "", WS_CHILD | WS_VISIBLE | WS_BORDER | ES_LEFT,
-		200 , 40 , 350, 20, portparma.hwnd, NULL, NULL, NULL);
+		205 , 45 , 350, 20, portparma.hwnd, NULL, NULL, NULL);
 
 	hInput2 = CreateWindow("edit", "", WS_CHILD | WS_VISIBLE | WS_BORDER | ES_LEFT,
-		200, 75, 350, 20, portparma.hwnd, NULL, NULL, NULL);
+		205, 80, 350, 20, portparma.hwnd, NULL, NULL, NULL);
 
 	
 
