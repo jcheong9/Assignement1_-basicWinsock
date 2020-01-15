@@ -1,18 +1,13 @@
 #include "application.h"
 /*------------------------------------------------------------------------------------------------------------------
--- SOURCE FILE: winmain.cpp -	An application that creates a window and process window messages
---								that define the behavior of dumb terminal.
+-- SOURCE FILE: service_port.cpp -	A simple program to resolve a service name to 
+--									its port number. 
 --
 --
 -- PROGRAM: Basic Window Socket Application
 --
 -- FUNCTIONS:
---				WinMain(HINSTANCE hInst, HINSTANCE hprevInstance,
---						LPSTR lspszCmdParam, int nCmdShow)
---				LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
---						WPARAM wParam, LPARAM lParam)
---				void PrintToScreen(WPARAM wParam)
---				DWORD WINAPI MonitorInputThread(LPVOID hwnd)
+--				int service_port(TCHAR* serivce, TCHAR* protocol, HWND textHwnd)
 --
 -- DATE: January 15, 2020
 --
@@ -23,9 +18,8 @@
 -- PROGRAMMER: Jameson Cheong
 --
 -- NOTES:
--- This is a minimal terminator emulator that performs basic functions of
--- connection to a serial port and transmitting or receiving characters from the port.
--- Also, it provides user interface for user to set port settings and see displayed transmitted char.
+-- This simple  program  will  take a user specified service name and protocol
+-- and resolve it into its port number using window socket. 
 ----------------------------------------------------------------------------------------------------------------------*/
 int service_port(TCHAR* serivce, TCHAR* protocol, HWND textHwnd) {
 	struct servent* sv;

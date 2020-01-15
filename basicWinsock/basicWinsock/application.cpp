@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------------------------------------------
--- SOURCE FILE: winmain.cpp -	An application that creates a window and process window messages
---								that define the behavior of dumb terminal.
+-- SOURCE FILE: winmain.cpp -	An application that uses basic Winsock 2 API database
+--								lookup calls to get host or serivce information.
 --
 --
 -- PROGRAM: Basic Window Socket Application
@@ -10,8 +10,6 @@
 --						LPSTR lspszCmdParam, int nCmdShow)
 --				LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
 --						WPARAM wParam, LPARAM lParam)
---				void PrintToScreen(WPARAM wParam)
---				DWORD WINAPI MonitorInputThread(LPVOID hwnd)
 --
 -- DATE: January 15, 2020
 --
@@ -22,8 +20,7 @@
 -- PROGRAMMER: Jameson Cheong
 --
 -- NOTES:
--- This is a minimal terminator emulator that performs basic functions of
--- connection to a serial port and transmitting or receiving characters from the port.
+-- This application provides 3
 -- Also, it provides user interface for user to set port settings and see displayed transmitted char.
 ----------------------------------------------------------------------------------------------------------------------*/
 #pragma once

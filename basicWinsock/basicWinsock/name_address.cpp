@@ -1,18 +1,13 @@
 #include "application.h"
 /*------------------------------------------------------------------------------------------------------------------
--- SOURCE FILE: winmain.cpp -	An application that creates a window and process window messages
---								that define the behavior of dumb terminal.
+-- SOURCE FILE: name_address.cpp -	A simple program get the IP address and host name
+--									using the name of the web address or the IP.
 --
 --
 -- PROGRAM: Basic Window Socket Application
 --
 -- FUNCTIONS:
---				WinMain(HINSTANCE hInst, HINSTANCE hprevInstance,
---						LPSTR lspszCmdParam, int nCmdShow)
---				LRESULT CALLBACK WndProc(HWND hwnd, UINT Message,
---						WPARAM wParam, LPARAM lParam)
---				void PrintToScreen(WPARAM wParam)
---				DWORD WINAPI MonitorInputThread(LPVOID hwnd)
+--				int nameAddr(TCHAR* ip, HWND textHwnd)
 --
 -- DATE: January 15, 2020
 --
@@ -23,31 +18,10 @@
 -- PROGRAMMER: Jameson Cheong
 --
 -- NOTES:
--- This is a minimal terminator emulator that performs basic functions of
--- connection to a serial port and transmitting or receiving characters from the port.
--- Also, it provides user interface for user to set port settings and see displayed transmitted char.
-----------------------------------------------------------------------------------------------------------------------*/
-
-
-/*------------------------------------------------------------------------------------------------------------------
--- FUNCTION: WinMain
---
--- DATE: January 15, 2020
---
--- REVISIONS: (Date and Description)
---
--- DESIGNER: Jameson Cheong
---
--- PROGRAMMER: Jameson Cheong
---
--- INTERFACE: int WinMain(HINSTANCE hInst, HINSTANCE hprevInstance,
---					LPSTR lspszCmdParam, int nCmdShow)
---
--- RETURNS: int
---
--- NOTES:
--- This function creates window and the user interface.
---
+-- This simple  program  will  get  the  canonical  name,
+-- aliases,  and  '.'  separated  Internet IP addresses for a
+-- given destination host using the window socket. 
+-- 
 ----------------------------------------------------------------------------------------------------------------------*/
 
 
@@ -64,13 +38,6 @@ int nameAddr(TCHAR* ip, HWND textHwnd) {
 	WORD wVersionRequested = MAKEWORD(2, 2);
 	WSADATA wsaData;
 	LPCWSTR strMessage;
-
-	//if (argc != 2)
-	//{
-	//	
-	//	printf("Usage: %s Destination\n", argv[0]);
-	//	exit(1);
-	//}
 
 	// Open up a Winsock v2.2 session
 	WSAStartup(wVersionRequested, &wsaData);
