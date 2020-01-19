@@ -21,8 +21,8 @@
 --
 -- NOTES:
 -- This application provides three selections to perform WinSocket API database lookup.
--- There three selections are name address, service port, and port service. Once these lookup are
--- executed with the appropriate input(s), the information will be diaplayed on the screen.
+-- The three selections are name address, service port, and port service. Once these lookup are
+-- executed with the appropriate input(s), the host's information will be diaplayed on the screen.
 ----------------------------------------------------------------------------------------------------------------------*/
 #pragma once
 
